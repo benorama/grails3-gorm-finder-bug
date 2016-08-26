@@ -1,4 +1,54 @@
-# Demo app for Grails3 GORM issue
+# Demo app for Grails3 GORM finder issue
+
+The app src has 2 interfaces `Account` and `Item`.
+
+```groovy
+package test.app
+
+interface Account {
+
+  String getName()
+  void setName(String name)
+
+}
+```
+
+```groovy
+package test.app
+
+interface Item {
+
+  Account getAccount()
+  void setAccount(Account account)
+
+}
+```
+
+Two domain classes implements those interfaces.
+
+```groovy
+package test.app
+
+class FacebookAccount implements Account {
+
+    String name
+
+}
+```
+
+```groovy
+package test.app
+
+class FacebookItem implements Item {
+
+    static belongsTo = [account: FacebookAccount]
+
+    void setAccount(Account account) {
+      this.account = account as FacebookAccount
+    }
+}
+```
+
 
 1. Run the app
 
