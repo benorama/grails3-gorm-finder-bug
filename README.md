@@ -60,7 +60,7 @@ grails run-app
 
 3. Execute the following code
 
-```
+```groovy
 import test.app.*
 
 FacebookItem.findAllByAccount(FacebookAccount.get(1))
