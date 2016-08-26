@@ -69,3 +69,28 @@ FacebookItem.findAllByAccount(FacebookAccount.get(1))
 You'll get the following exception `org.hibernate.QueryException: could not resolve property: account of: test.app.FacebookItem`.
 
 The same app and code is running fine on Grails 2.4.4.
+
+# Update to solve the issue
+
+Thanks to Graeme, here is the solution: by adding the setter  `setAccount` the property becomes read-only.
+
+To solve the issue, the corresponding setters must be added:
+
+```groovy
+package test.app
+
+class FacebookItem implements Item {
+
+    static belongsTo = [account: FacebookAccount]
+
+    FacebookAccount getAccount() {
+      this.account
+    }
+    void setAccount(FacebookAccount account) {
+      this.account = account
+    }
+    void setAccount(Account account) {
+      this.account = account as FacebookAccount
+    }
+}
+```
